@@ -26,7 +26,7 @@ def normalize(x):
 
     for row in x:
         norm_row = [
-            (row[i] - min_values[i] / (max_values[i] - min_values[i]))
+            (row[i] - min_values[i]) / (max_values[i] - min_values[i])
             for i in range(len(row))
         ]
 

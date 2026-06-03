@@ -17,9 +17,19 @@ def knn_predict(training_data, training_labels, new_point, k):
     # get k nearest neighbors
     neighbors = distances[:k]
 
+    # 🔍 PRINT NEIGHBORS
+    print("\nTop K Neighbors:")
+    for d in neighbors:
+        print(f"Distance: {d[0]:.4f}, Label: {d[1]}")
+
     #voiting 
     labels = [label for _, label in neighbors]
+    print("\nVoting labels:", labels)
+    vote_count = Counter(labels)
+    print("Vote count:", vote_count)
     most_common = Counter(labels).most_common(1)
 
+    print("Final decision:", most_common[0][0])
+    
     return most_common[0][0]
 

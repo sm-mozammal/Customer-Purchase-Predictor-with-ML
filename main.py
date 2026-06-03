@@ -19,13 +19,13 @@ def normalize_input(x, X):
     max_values = [max(col) for col in zip(*X)]
 
     norm_row = [
-        (x[i] - min_values[i] / (max_values[i] - min_values[i]))
+        (x[i] - min_values[i]) / (max_values[i] - min_values[i])
         for i in range(len(x))
     ]
 
     return norm_row
 
-new_point_norm = normalize_input(new_point, X)
+new_point_norm = normalize_input(new_point, x)
 
 # predict
 k = 5
