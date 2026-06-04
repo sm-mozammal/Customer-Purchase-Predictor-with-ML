@@ -44,13 +44,34 @@ def predict():
     new_coustomer_norm = normalize_input(new_coustomer, x) 
 
 
-    result = knn_predict(X_norm,y, new_coustomer_norm, k=5)
+    result = knn_predict(X_norm,y, new_coustomer_norm, k=10)
+
+    def calculate_accuracy(X, y, k):
+        correct = 0
+
+        for i in range(len(X)):
+            # leave-one-out (simple way)
+            X_train = X[:i] + X[i+1:]
+            y_train = y[:i] + y[i+1:]
+
+            prediction = knn_predict(X_train, y_train, X[i], k)
+
+            if prediction == y[i]:
+                correct += 1
+
+        accuracy = correct / len(X)
+        return accuracy
+    
+    accuracy = calculate_accuracy(X_norm, y, k=10)
+    print(f"Model accuracy: {accuracy:.2%}")
+    print(f"Model Accuracy: {accuracy * 100:.2f}%")
 
     return jsonify({
         "age": age,
         "salary": salary,
         "predicted_class": result,
-        "prediction": "Will Buy" if result == 1 else "Will NOT Buy"
+        "prediction": "Will Buy" if result == 1 else "Will NOT Buy",
+        "model_accuracy": f"{accuracy:.2%}"
     })
 
 if __name__ == "__main__":
